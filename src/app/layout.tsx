@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import News from "@/components/News";
+import SessionWrapper from "@/components/SessionWrapper";
+import Sidebar from "@/components/Sidebar";
+import { RecoilRoot } from "recoil";
+import CommentModal from "@/components/CommentModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +20,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <SessionWrapper>
+      
+        <html lang="en">
+          <body className={inter.className}>
+            <div className="flex justify-between max-w-6xl mx-auto">
+              <div className="hidden sm:inline border-r h-screen sticky top-0">
+                <Sidebar />
+              </div>
+              <div className='w-2xl flex-1'>
+                {children}
+
+              </div>
+              <div className="lg:flex-col p-3 h-screen border-l hidden lg:flex w-[24rem]">
+                <News />
+
+              </div>
+            </div>
+            <CommentModal />
+          </body>
+        </html>
+      
+    </SessionWrapper>
   );
 }
