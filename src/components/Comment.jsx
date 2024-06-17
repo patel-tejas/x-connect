@@ -14,22 +14,19 @@ import {
 import { app } from '../firebase';
 import { signIn, useSession } from 'next-auth/react';
 
-export default function Comment({ comment, commentId, originalPostId }: {
-    comment: any;
-    commentId: string;
-    originalPostId: string;
-}) {
-    const [isLiked, setIsLiked] = useState<boolean>(false);
-    const [likes, setLikes] = useState<string[]>([]);
-    const { data: session } = useSession<any>(); // Assuming you have an interface for Session
+export default function Comment({ comment, commentId, originalPostId }) {
+    const [isLiked, setIsLiked] = useState(false);
+    const [likes, setLikes] = useState([]);
+    const { data: session } = useSession(); // Assuming you have an interface for Session
+    // console.log(session);
+    
     const db = getFirestore(app);
 
-    console.log(session);
+    // console.log(session?.user?.uid);
 
     const likePost = async () => {
         if (session && session.user) { // Check if session and user exist
             const userId = session.user.uid; // Now you can access 'uid' type-safely
-
             if (isLiked) {
                 await deleteDoc(
                     doc(
@@ -80,7 +77,7 @@ export default function Comment({ comment, commentId, originalPostId }: {
     }, [likes]);
 
     return (
-        <div className='flex p-3 border-b border-gray-200 hover:bg-gray-50 pl-10'>
+        <div className='flex p-3 border-b border-gray-200 hover:bg-gray-50 pl-10 gap-2'>
             <img
                 src={comment?.userImg}
                 alt='user-img'

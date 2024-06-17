@@ -14,15 +14,16 @@ import {
     onSnapshot,
     serverTimestamp,
 } from 'firebase/firestore';
-const { useSession } = require('next-auth/react');
+
 import { app } from '../firebase';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 export default function CommentModal() {
     const [open, setOpen] = useRecoilState(modalState);
     const [postId, setPostId] = useRecoilState(postIdState);
     const [input, setInput] = useState(''); // [1
-    const [post, setPost] = useState<any>({});
+    const [post, setPost] = useState({});
     const { data: session } = useSession();
     const db = getFirestore(app);
     const router = useRouter();
@@ -43,9 +44,9 @@ export default function CommentModal() {
 
     const sendComment = async () => {
         addDoc(collection(db, 'posts', postId, 'comments'), {
-            name: session.user.name,
-            username: session.user.username,
-            userImg: session.user.image,
+            name: session?.user?.name,
+            username: session?.user?.username,
+            userImg: session?.user?.image,
             comment: input,
             timestamp: serverTimestamp(),
         })
@@ -94,7 +95,7 @@ export default function CommentModal() {
                         </p>
                         <div className='flex p-3 space-x-3'>
                             <img
-                                src={session.user.image}
+                                src={session?.user?.image}
                                 alt='user-img'
                                 className='h-11 w-11 rounded-full cursor-pointer hover:brightness-95'
                             />
