@@ -1,7 +1,7 @@
 import React from 'react'
 import { DocumentData, collection, getDocs, getFirestore,  orderBy, query } from 'firebase/firestore'
 
-import {app}from '../firebase'
+import {app} from '../firebase'
 
 import Post from './Post'
 
@@ -14,6 +14,9 @@ const Feed = async () => {
         data.push({id:doc.id, ...doc.data()})
     })
     // console.log(data)
+
+  if (!data) return <h1>Loading...</h1>
+
   return (
     <div className=''>
         {data.map((post: DocumentData) => (
