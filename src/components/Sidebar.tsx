@@ -9,7 +9,7 @@ import { HiDotsHorizontal, HiHome } from 'react-icons/hi'
 // import defaultUserImage from "/pfp.jpg"
 
 const Sidebar = () => {
-    const {data: session} = useSession();
+    const {data: session}: any = useSession();
     // console.log(session?.user);
     
     return (
@@ -41,7 +41,7 @@ const Sidebar = () => {
                     </button>
                 )}
             </div>
-            {session && (
+            {session &&  (
                 <div className='text-gray-700 text-sm flex items-center cursor-pointer p-3 hover:bg-gray-100 rounded-full transition-all duration-200'>
                     <Image
                         src={"/pfp.jpg"}

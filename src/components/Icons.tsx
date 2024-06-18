@@ -13,11 +13,9 @@ const Icons = ({ id, uid }: { id: string, uid: string }) => {
     const [isLiked, setIsLiked] = useState<boolean>(false)
     const [likes, setLikes] = useState<any>([])
     const [comments, setComments] = useState<any>([])
-    const { data: session } = useSession()
+    const { data: session }: any = useSession()
     const [open, setOpen] = useRecoilState(modalState)
-    const [postId, setPostId] = useRecoilState(postIdState)
-
-    
+    const [postId, setPostId] = useRecoilState(postIdState)    
 
     useEffect(() => {
         onSnapshot(collection(db, 'posts', id, "likes"), (snapshot) => {

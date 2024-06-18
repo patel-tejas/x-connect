@@ -5,12 +5,15 @@ import React, { useEffect, useRef, useState } from 'react'
 import { HiOutlinePhotograph } from 'react-icons/hi';
 import { app } from "../firebase"
 import { addDoc, collection, getFirestore, serverTimestamp } from 'firebase/firestore';
+import { sessionType } from '@/lib/dataTypes';
 
 const Input = () => {
-    const { data: session } = useSession<any>();
+    const { data: session }: any = useSession<any>();
+    
+    
     const imagePickRef = useRef<any>(null);
-    const [imageFileUrl, setImageFileUrl] = useState<string | null>(null)
-    const [selectedFile, setSelectedFile] = useState<string | null>(null)
+    const [imageFileUrl, setImageFileUrl] = useState<string | null >(null)
+    const [selectedFile, setSelectedFile] = useState<File | null>(null)
     const [imageFileUploading, setImageFileUploading] = useState(false)
     const [text, setText] = useState<string>('')
     const [postLoading, setPostLoading] = useState<boolean>(false);
@@ -42,6 +45,8 @@ const Input = () => {
     }
 
     const uploadImageToStorage = () => {
+        if (!selectedFile) return
+        
         setImageFileUploading(true)
         const storage = getStorage(app)
         const fileName = new Date().getTime() + '-' + selectedFile.name
@@ -129,7 +134,7 @@ const Input = () => {
                     >
 
                     </textarea>
-                    {selectedFile && (
+                    {selectedFile && imageFileUrl && (
                         <img
                             src={imageFileUrl}
                             alt='image'
